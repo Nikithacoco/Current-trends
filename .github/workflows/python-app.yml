@@ -22,19 +22,19 @@ jobs:
         install: true
 
     - name: Log in to DockerHub
-      run: echo "${{ secrets.DOCKER_PASSWORD_NIKITHA }}" | docker login -u "${{ secrets.DOCKER_USERNAME_NIKITHA }}" --password-stdin
+      run: echo "${{ secrets.DOCKER_PASSWORD_MLOPS}}" | docker login -u "${{ secrets.DOCKER_USERNAME_MLOPS}}" --password-stdin
 
     - name: Build and push Streamlit image
       run: |
         docker buildx build --cache-from=type=local,src=/tmp/.buildx-cache \
                             --cache-to=type=local,dest=/tmp/.buildx-cache-new \
-                            --push -t basudevp/msrit-bank-risk-cat-streamlit:latest -f Dockerfile.streamlit .
+                            --push -t cnikithasingh/my-streamlit-app:latest -f Dockerfile.streamlit .
 
     - name: Build and push FastAPI image
       run: |
         docker buildx build --cache-from=type=local,src=/tmp/.buildx-cache \
                             --cache-to=type=local,dest=/tmp/.buildx-cache-new \
-                            --push -t basudevp/msrit-bank-risk-cat-fastapi:latest -f Dockerfile.fastapi .
+                            --push -t cnikithasingh/my-fastapi-app:latest -f Dockerfile.fastapi .
 
     - name: Clean up Docker cache
       run: |
